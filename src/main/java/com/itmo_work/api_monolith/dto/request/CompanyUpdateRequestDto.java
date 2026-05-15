@@ -1,0 +1,18 @@
+package com.itmo_work.api_monolith.dto.request;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Builder;
+
+@Builder
+public record CompanyUpdateRequestDto (
+
+        @Size(min = 2, max = 255, message = "Company name must be between 2 and 255 characters")
+        String name,
+
+        @Size(min = 5, max = 320, message = "Company email must be between 5 and 320 characters")
+        String email,
+
+        String description
+){
+}

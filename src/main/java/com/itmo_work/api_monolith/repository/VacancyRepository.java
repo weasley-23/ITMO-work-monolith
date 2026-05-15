@@ -1,0 +1,27 @@
+package com.itmo_work.api_monolith.repository;
+
+import com.itmo_work.api_monolith.model.Vacancy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
+    boolean existsVacanciesById(Long id);
+
+    @Query("select v.status.id from Vacancy v where v.id = :vacancyId")
+    Long findVacancyStatusById(Long vacancyId);
+
+    @Query("select v.company.id from Vacancy v where v.id = :vacancyId")
+    Long findCompanyIdById(Long vacancyId);
+
+    @Query("select v from Vacancy v where v.status.vacancyStatusName = 'PUBLISHED'")
+    Page<Vacancy> getAllPublished(Pageable pageable);
+
+
+}
+

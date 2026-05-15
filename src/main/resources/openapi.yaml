@@ -1,0 +1,158 @@
+openapi: 3.1.0
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /api/vacancies/draft:
+    post:
+      summary: Create DRAFT Vacancy
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VacancyCreateRequestDto'
+      responses:
+        '201':
+          description: Draft vacancy created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VacancyResponseDto'
+
+  /api/vacancies/published:
+    post:
+      summary: Create PUBLISHED Vacancy
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VacancyCreateRequestDto'
+      responses:
+        '201':
+          description: Published vacancy created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VacancyResponseDto'
+
+  /api/vacancies/draft/{id}:
+    patch:
+      summary: Change content of draft vacancy to new draft
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VacancyUpdateRequestDto'
+      responses:
+        '200':
+          description: Draft vacancy updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VacancyResponseDto'
+
+  /api/vacancies/{id}/publish:
+    patch:
+      summary: Publish vacancy (DRAFT -> PUBLISHED)
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Vacancy published
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VacancyResponseDto'
+
+
+components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    VacancyCreateRequestDto:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        salaryFrom:
+          type: integer
+        salaryTo:
+          type: integer
+        companyId:
+          type: integer
+        currencyId:
+          type: integer
+      required:
+        - title
+        - description
+        - salaryFrom
+        - salaryTo
+        - companyId
+        - currencyId
+
+    VacancyResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        salaryFrom:
+          type: integer
+        salaryTo:
+          type: integer
+        status:
+          type: string
+        companyId:
+          type: integer
+        currency:
+          type: integer
+
+    VacancyUpdateRequestDto:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        salaryFrom:
+          type: integer
+        salaryTo:
+          type: integer
+        currencyId:
+          type: ineteger
+
+  

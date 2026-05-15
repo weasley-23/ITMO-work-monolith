@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/v.1.0/2025-22-09--01-initial-schema.sql
+  - include:
+      file: db/changelog/v.1.0/2025-24-09--01-add-user-roles-many-to-many.sql
+
+  - include:
+      file: db/changelog/v.1.0/2025-26-09-01-update-roles-in-roles-table.sql
+
+  - include:
+      file: db/changelog/v.1.0/2025-26-09-02-update-vacancy-status-values.sql
+
+  - include:
+      file: db/changelog/v.1.0/2025-07-10--01-insert-new-role-into-roles.sql
+
+  - include:
+      file: db/changelog/v.1.0/2025-07-10--02-add-company-status.sql
+
+  - include:
+      file: db/changelog/v.1.0/2025-09--01-insert-new-company-status-deleted.sql
+
+  - include:
+      file: db/changelog/v.1.0/2025-31-10--01-change-salary-type-to-int.sql
+
+  - include:
+      file: db/changelog/v.1.0/2025-01-11--01-drop-roles-table.sql

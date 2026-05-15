@@ -1,0 +1,44 @@
+services:
+  app:
+    build:
+      context: .
+      target: runtime
+    container_name: itmo-work-app
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - postgres-db
+    restart: unless-stopped
+
+  postgres-db:
+    image: postgres:17
+    container_name: itmo-work-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - postgres_itmo-work-db-data:/var/lib/postgresql/data
+
+  tests:
+    build:
+      context: .
+      target: test
+    env_file:
+      - .env
+    volumes:
+      - gradle-cache:/root/.gradle
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=${TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE}
+      - DOCKER_HOST=${DOCKER_HOST}
+      - TESTCONTAINERS_HOST_OVERRIDE=${TESTCONTAINERS_HOST_OVERRIDE}
+    restart: "no"
+
+volumes:
+  postgres_itmo-work-db-data:
+  gradle-cache:
