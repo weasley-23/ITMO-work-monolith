@@ -17,7 +17,8 @@ public class CompanyStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, unique = true)
     private CompanyStatusName statusName;
 }
